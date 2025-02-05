@@ -1,8 +1,7 @@
-import express, { json, Request, Response} from "express";
+import express, { Request, Response} from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import pg from "pg";
-const { Pool } = pg;
+import pool from "./database/connection";
 
 const app = express();
 
@@ -10,17 +9,12 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-let pool = new Pool({
-    host: "dpg-cu6ktndumphs73cv1ft0-a.oregon-postgres.render.com",
-    port: 5432,
-    ssl: { rejectUnauthorized: false, },
-    user: "allocatr",
-    password: "HI8PY1RTI5z5ozhGzG9Iq6BprRgnbxHi",
-    database: "allcdb",
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 6000
-});
+pool
+    .connect()
+    .then(() => console.log("db connected successfully"))
+    .catch((err) => console.error("Database connection: ", err));
+
+
 
 const getUser = async () => {
     let client;
@@ -46,6 +40,4 @@ app.get("/", (request: Request, response: Response) => {
 });
 
 const port = process.env.PORT
-app.listen(port, () => {
-    console.log(`listening on ${port}`);
-});
+app.listen(port, () => console.log(`Server started on ${port}`));
