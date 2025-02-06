@@ -1,3 +1,4 @@
 type User = {
-    email: string
+    email: string;
+    auth0Id: string;
 }

@@ -6,8 +6,8 @@ export const createUserModel = async (email: string, auth0Id: string) => {
         const { rows } = await pool.query(queries.createUserQuery, [email, auth0Id]);
         return rows;
     } catch (error) {
-        console.error("Error creating user", error);
-        throw error;
+        console.error(error);
+        throw error
     }
 };
 

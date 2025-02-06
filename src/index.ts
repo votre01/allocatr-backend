@@ -7,6 +7,11 @@ import routes from "./routes/index"
 const app = express();
 
 dotenv.config();
+
+const corsOptions = {
+    origin: ["http://localhost:5173"],
+}
+
 app.use(cors());
 app.use(express.json());
 

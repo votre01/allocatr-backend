@@ -3,7 +3,7 @@ import { createUserController, getAllUsersController} from "../controllers/users
 
 const router = Router();
 
-router.post("/auth/login", createUserController);
+router.post("/auth", createUserController);
 // router.get("/:id", getUserById);
 router.get("/", getAllUsersController);
 // router.patch("/users:id", updateUserById);
