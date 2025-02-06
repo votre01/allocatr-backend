@@ -3,9 +3,9 @@ export const queries = {
      * Profile queries
      *****************************************/
     createUserQuery: `
-        INSERT INTO public.users (email, password)
+        INSERT INTO public.users (email, auth0Id)
         VALUES ($1, $2)
-        RETURNING user_id, email;
+        RETURNING user_id, email, auth0Id;
     `,
 
     getAllUsersQuery: `
@@ -25,19 +25,21 @@ export const queries = {
     * Profile queries
     *****************************************/
     createProfile: `
-        INSERT into public.profile
-            (profile_id, first_name, last_name, email, phone, id_number, bio, user_id, address_id)
+        INSERT INTO public.profile
+            (user_id, first_name, last_name, email, phone, id_number, bio, address_id)
         VALUES
-            ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+            ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING user_id, first_name, last_name, email, phone, id_number;
     `,
 
     /*****************************************
     * Account queries
     *****************************************/
     createAccount: `
-        INSERT into account
-            (account_id, status, role, user_id, created_at)
+        INSERT INTO public.account
+            (user_id, status, role, created_at, updated_at)
         VALUES
-            ($1, $2, $3, $4, NOW());
+            ($1, $2, $3, NOW(), NOW())
+        RETURNING user_id, status, role, created_at, updated_at;
     `,
 }

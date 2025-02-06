@@ -1,9 +1,9 @@
 import pool from "../database/connection";
 import { queries } from "../database/queries";
 
-export const createUserModel = async (email: string, password: string) => {
+export const createUserModel = async (email: string, auth0Id: string) => {
     try {  
-        const { rows } = await pool.query(queries.createUserQuery, [email, password]);
+        const { rows } = await pool.query(queries.createUserQuery, [email, auth0Id]);
         return rows;
     } catch (error) {
         console.error("Error creating user", error);
