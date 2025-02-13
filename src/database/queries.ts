@@ -32,6 +32,19 @@ export const queries = {
         RETURNING user_id, first_name, last_name, email, phone, id_number, created_at;
     `,
 
+    updateProfile: `
+        UPDATE TABLE public.profile
+        SET
+            first_name = $1,
+            last_name = $2,
+            email = $3,
+            phone = $4,
+            id_number = $5,
+            bio = $6,
+            updated_at = NOW()
+        WHERE id = user_id
+    `,
+
     /*****************************************
     * Account queries
     *****************************************/

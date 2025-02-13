@@ -7,7 +7,7 @@ import { createUserModel, getAllUsersModel, getUserByEmailModel } from "../model
   * - If user does not exist, create new user
   * - If user exists, proceed with authentication
   */
-export const createUserController = async (req: Request, res:Response): Promise<any> => {
+const createUserController = async (req: Request, res:Response): Promise<any> => {
     try {
         const user = req.body;
         const userExists: any = await getUserByEmailModel(user.email);
@@ -29,7 +29,7 @@ export const createUserController = async (req: Request, res:Response): Promise<
  * - Fetches an array of user objects from the database
  * - Returns the user data in JSON format
  */
-export const getAllUsersController = async(req: Request, res: Response): Promise<void> => {
+const getAllUsersController = async(req: Request, res: Response): Promise<void> => {
     try {
         const rows = await getAllUsersModel();
         if (rows) {
@@ -40,3 +40,8 @@ export const getAllUsersController = async(req: Request, res: Response): Promise
         res.status(500).json({ message: "Error fetching users" }); // change to use global error handler
     }  
 };
+
+export default {
+    createUserController,
+    getAllUsersController
+}
