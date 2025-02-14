@@ -1,6 +1,6 @@
 export const queries = {
     /*****************************************
-     * Profile queries
+     * User queries
      *****************************************/
     createUserQuery: `
         INSERT INTO public.users (email, auth0_id, created_at, updated_at)
@@ -17,38 +17,38 @@ export const queries = {
         WHERE email = $1;
     `,
 
-    updateUser: ``,
+    updateUserQuery: ``,
 
-    deleteUser: ``,
+    deleteUserQuery: ``,
     
     /*****************************************
     * Profile queries
     *****************************************/
-    createProfile: `
+    createProfileQuery: `
         INSERT INTO public.profile
-            (user_id, first_name, last_name, email, phone, id_number, bio, address_id, created_at, updated_at)
+            (user_id, first_name, last_name, phone, id_number, bio, created_at, updated_at)
         VALUES
-            ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
-        RETURNING user_id, first_name, last_name, email, phone, id_number, created_at;
+            ($1, $2, $3, $4, $5, $6, NOW(), NOW())
+        RETURNING user_id, first_name, last_name, phone, id_number, created_at;
     `,
 
-    updateProfile: `
+    updateProfileQuery: `
         UPDATE TABLE public.profile
         SET
             first_name = $1,
             last_name = $2,
-            email = $3,
-            phone = $4,
-            id_number = $5,
-            bio = $6,
+            phone = $3,
+            id_number = $4,
+            bio = $5,
             updated_at = NOW()
         WHERE id = user_id
+        RETURNING user_id, first_name, last_name, phone, id_number, updated_at;
     `,
 
     /*****************************************
     * Account queries
     *****************************************/
-    createAccount: `
+    createAccountQuery: `
         INSERT INTO public.account
             (user_id, status, role, created_at, updated_at)
         VALUES
