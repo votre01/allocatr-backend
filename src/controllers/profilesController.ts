@@ -1,12 +1,10 @@
 import profileModels from "../models/profileModels";
-
 import { Request, Response } from "express"
 
 const createProfileController = async (req: Request, res: Response) => {
-    const profile = req.body;
     try {
         const result = await profileModels.createProfileModel(
-            req.body.userId,
+            req.body.id,
             req.body.firstName,
             req.body.lastName,
             req.body.phone,
@@ -21,11 +19,22 @@ const createProfileController = async (req: Request, res: Response) => {
     }
 }
 
-const updateProfileController = async (req: Request, res: Response) => {
-    const profile = req.body;
+const updateProfileController = async (req: Request, res: Response): Promise<any> => {
     try {
-        profileModels.updateProfileModel();
+        const userId = req.params.id
+        const user = await profileModels.getProfileByIdModel(userId)
 
+        if (!user) {
+            return res.status(404).json({ message: "User not found" })
+        }
+
+        profileModels.updateProfileModel(            
+            req.body.firstName,
+            req.body.lastName,
+            req.body.phone,
+            req.body.string,
+            req.body.bio
+        );
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: "Failed to update profile"})

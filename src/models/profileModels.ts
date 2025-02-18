@@ -21,9 +21,26 @@ const createProfileModel = async (
     }
 }
 
-const updateProfileModel = () => {}
+const updateProfileModel = async (
+    firstName: string,
+    lastName: string,
+    phone: string,
+    idNumber: string,
+    bio: string,
+) => {}
+
+const getProfileByIdModel = async (userId: string) => {
+    try {
+        const { rows } = await pool.query(queries.getProfileByIdQuery, [userId]);
+        return rows[0];
+    } catch (error) {
+        console.error("Failed to get user from database", error);
+        throw error;
+    };
+};
 
 export default {
     createProfileModel,
     updateProfileModel,
+    getProfileByIdModel,
 }

@@ -12,6 +12,11 @@ export const queries = {
         SELECT * FROM public.users;
     `,
 
+    getUserByIdQuery: `
+        SELECT user_id, email FROM public.users
+        WHERE user_id = $1;
+    `,
+
     getUserByEmailQuery: `
         SELECT user_id, email FROM public.users
         WHERE email = $1;
@@ -43,6 +48,11 @@ export const queries = {
             updated_at = NOW()
         WHERE id = user_id
         RETURNING user_id, first_name, last_name, phone, id_number, updated_at;
+    `,
+
+    getProfileByIdQuery: `
+        SELECT * FROM public.users
+        WHERE user_id = $1;
     `,
 
     /*****************************************

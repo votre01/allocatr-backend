@@ -21,6 +21,16 @@ export const getUserByEmailModel = async (email: string) => {
     };
 };
 
+export const getUserByIdModel = async (userId: number) => {
+    try {
+        const { rows } = await pool.query(queries.getUserByIdQuery, [userId]);
+        return rows[0];
+    } catch (error) {
+        console.error("Failed to get user from database", error);
+        throw error;
+    };
+};
+
 export const getAllUsersModel = async () => {
     try {
         const { rows } = await pool.query(queries.getAllUsersQuery)
