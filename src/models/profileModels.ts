@@ -2,17 +2,48 @@ import pool from "../database/connection";
 import { queries}  from "../database/queries";
 
 const createProfileModel = async (
-    userId: number,
-    firstName: string,
-    lastName: string,
+    user_id: string,
+    first_name: string,
+    last_name: string,
+    birth_date: string,
+    gender: string,
     phone: string,
-    idNumber: string,
+    id_number: string,
     bio: string,
+    is_company: boolean,
+    company_name: string,
+    company_registration: string,
+    accreditation: string,
+    city_id: number,
+    country_id: number,
+    latitude: number,
+    longitude: number,
+    created_at: string,
+    updated_at: string
 ) => {
     try {
         const {rows} = await pool.query(
             queries.createProfileQuery,
-            [userId, firstName, lastName, phone, idNumber, bio]
+            [
+                user_id,
+                first_name,
+                last_name,
+                birth_date,
+                gender,
+                phone,
+                id_number,
+                bio,
+                is_company,
+                company_name,
+                company_registration,
+                accreditation,
+                city_id,
+                country_id,
+                latitude,
+                longitude,
+                created_at,
+                updated_at
+            ]
         );
         return rows;    
     } catch (error) {
@@ -22,11 +53,22 @@ const createProfileModel = async (
 }
 
 const updateProfileModel = async (
-    firstName: string,
-    lastName: string,
+    first_name: string,
+    last_name: string,
+    birth_date: string,
+    gender: string,
     phone: string,
-    idNumber: string,
+    id_number: string,
     bio: string,
+    is_company: boolean,
+    company_name: string,
+    company_registration: string,
+    accreditation: string,
+    city_id: number,
+    country_id: number,
+    latitude: number,
+    longitude: number,
+    updated_at: string
 ) => {}
 
 const getProfileByIdModel = async (userId: string) => {
