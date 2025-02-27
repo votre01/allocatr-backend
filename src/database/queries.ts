@@ -13,13 +13,18 @@ export const queries = {
     `,
 
     getUserByIdQuery: `
-        SELECT user_id, email FROM public.users
+        SELECT * FROM public.users
         WHERE user_id = $1;
     `,
 
     getUserByEmailQuery: `
-        SELECT user_id, email FROM public.users
+        SELECT * FROM public.users
         WHERE email = $1;
+    `,
+
+    getUserByAuth0IdQuery: `
+        SELECT * FROM public.users
+        WHERE auth0_id = $1;
     `,
 
     updateUserQuery: ``,
@@ -30,7 +35,7 @@ export const queries = {
     * Profile queries
     *****************************************/
     createProfileQuery: `
-        INSERT INTO public.profile (
+        INSERT INTO public.profiles (
             user_id,
             first_name,
             last_name,
@@ -56,7 +61,7 @@ export const queries = {
     `,
 
     updateProfileQuery: `
-        UPDATE TABLE public.profile
+        UPDATE TABLE public.profiles
         SET
             first_name = $1,
             last_name = $2,

@@ -18,8 +18,6 @@ const createProfileModel = async (
     country_id: number,
     latitude: number,
     longitude: number,
-    created_at: string,
-    updated_at: string
 ) => {
     try {
         const {rows} = await pool.query(
@@ -41,8 +39,6 @@ const createProfileModel = async (
                 country_id,
                 latitude,
                 longitude,
-                created_at,
-                updated_at
             ]
         );
         return rows;    
@@ -68,8 +64,33 @@ const updateProfileModel = async (
     country_id: number,
     latitude: number,
     longitude: number,
-    updated_at: string
-) => {}
+) => {
+    try {
+        const rows = await pool.query(
+            queries.updateProfileQuery, [
+                first_name,
+                last_name,
+                birth_date,
+                gender,
+                phone,
+                id_number,
+                bio,
+                is_company,
+                company_name,
+                company_registration,
+                accreditation,
+                city_id,
+                country_id,
+                latitude,
+                longitude,
+            ]
+        );
+        return rows;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 const getProfileByIdModel = async (userId: string) => {
     try {

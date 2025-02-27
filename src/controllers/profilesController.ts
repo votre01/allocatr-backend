@@ -1,8 +1,18 @@
 import profileModels from "../models/profileModels";
-import { Request, Response } from "express"
+import { Request, Response } from "express";
+import { getUserByIdModel } from "../models/userModel";
 
-const createProfileController = async (req: Request, res: Response) => {
+const createProfileController = async (req: Request, res: Response): Promise<any> => {
     try {
+        const user = await getUserByIdModel("1");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const profile = await profileModels.getProfileByIdModel("1");
+        if (profile) {
+            return res.status(409).json({ message: "Profile already exists" });
+        }
+
         const result = await profileModels.createProfileModel(
             req.body.user_id,
             req.body.first_name,
@@ -20,24 +30,20 @@ const createProfileController = async (req: Request, res: Response) => {
             req.body.country_id,
             req.body.latitude,
             req.body.longitude,
-            req.body.created_at,
-            req.body.updated_at
         );
         res.status(201).json({ result });
     
     } catch (error) {
         console.log(error)
-        res.status(500).json({ message: "Error creating profile"})
+        res.status(500).json({ message: "Error creating profile"});
     }
 }
 
 const updateProfileController = async (req: Request, res: Response): Promise<any> => {
     try {
-        const userId = req.params.id
-        const profile = await profileModels.getProfileByIdModel(userId)
-
+        const profile = await profileModels.getProfileByIdModel(req.userId);
         if (!profile) {
-            return res.status(404).json({ message: "Profile not found" })
+            return res.status(404).json({ message: "Profile not found" });
         }
 
         profileModels.updateProfileModel(
@@ -56,12 +62,11 @@ const updateProfileController = async (req: Request, res: Response): Promise<any
             req.body.country_id,
             req.body.latitude,
             req.body.longitude,
-            req.body.updated_at
         );
         res.send(profile)
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: "Failed to update profile"})
+        console.error(error);
+        res.status(500).json({ message: "Failed to update profile"});
     }
 }
 
