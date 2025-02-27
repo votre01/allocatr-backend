@@ -5,3 +5,4 @@ export const jwtCheck = auth({
   issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
   tokenSigningAlg: 'RS256'
 });
+
