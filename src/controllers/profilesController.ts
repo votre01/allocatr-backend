@@ -4,11 +4,11 @@ import { getUserByIdModel } from "../models/userModel";
 
 const createProfileController = async (req: Request, res: Response): Promise<any> => {
     try {
-        const user = await getUserByIdModel("1");
+        const user = await getUserByIdModel(req.userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        const profile = await profileModels.getProfileByIdModel("1");
+        const profile = await profileModels.getProfileByIdModel(req.userId);
         if (profile) {
             return res.status(409).json({ message: "Profile already exists" });
         }

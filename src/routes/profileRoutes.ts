@@ -5,7 +5,7 @@ import { validateProfileRequest } from "../middleware/validation";
 
 const router = Router()
 
-router.post("/", profilesController.createProfileController);
+router.post("/", jwtCheck, jwtParse, profilesController.createProfileController);
 router.put(
     "/",
     jwtCheck,

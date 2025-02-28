@@ -19,7 +19,7 @@ export const jwtCheck = auth({
 });
 
 export const jwtParse = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const { authorization } = req.headers;
+  const { authorization } = req.headers; //authorization
   if (!authorization || !authorization.startsWith("Bearer ")) {
     return res.sendStatus(401);
   }
@@ -28,11 +28,13 @@ export const jwtParse = async (req: Request, res: Response, next: NextFunction):
   try {
     const decoded = jwt.decode(token) as jwt.JwtPayload;
     const auth0Id = decoded.sub;
+    console.log(auth0Id);
 
     const user = await getUserByAuth0IdModel(auth0Id as string);
     if (!user) {
       return res.sendStatus(401);
     }
+    console.log(user);
     req.auth0Id = auth0Id as string;
     req.userId = user.user_id.toString();
     next();
